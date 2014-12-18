@@ -11,48 +11,86 @@
 #struggling now to figure out the right code to use with REGEX
 # using Rubular.com to find out the proper regex to extract the title
 
+#should we put this in a class--
+
+class Poem
+  attr_reader :poem
+
+  def initialize(poem)
+    @poem = poem
+  end
+
+  def poem_to_array
+    @poem.lines
+  end
+
+  def title
+    poem_array = @poem.lines
+    title = poem_array[0].chomp
+  end
+
+  def author
+    poem_array = @poem.lines
+    author = poem_array[1].chomp
+  end
+
+  #method that gives you the number of verses in the poem
+  def number_of_verses
+    verse_array = []
+    @poem.each_line do |line|
+      if line =~ /\n/ && line !~ /a-zA-Z/
+        verse_array.push("verse")
+      end
+    end
+    verse_array.length
+  end
+
+  #method that identifies the number of lines in the poem
+  def number_of_lines
+    line_array = []
+    @poem.each_line do |line|
+      line_array << line.count
+    end
+    line_array.length
+  end
+end
 
 
 poem = File.read('data/poem_01.txt')
 
-#method that gives you the poem title
+def poem_to_array(poem)
+  poem.lines
+end
+
 def title(poem)
-  title = #poem =~ /from start of the line to the first return/
-  title
+  poem_array = poem.lines
+  title = poem_array[0].chomp
 end
 
-#method that gives you the poem author
 def author(poem)
-  #poem =~ /from the start of the 2nd line to the 2nd return/
-  #should only return this string
+  poem_array = poem.lines
+  author = poem_array[1].chomp
 end
 
-#method that gives you the number of verses in the poem
 def number_of_verses(poem)
-  #poem
-  # should return an integer
-  number_of_consecutive_returns = []
-  poem.each do |lines|
-    if lines ~= /$$/
-      number_of_consecutive_returns.push(:cons_ret)
+  verse_array = []
+  poem.each_line do |line|
+    if line =~ /\n/ && line !~ /a-zA-Z/
+      verse_array.push("verse")
     end
   end
-  number_of_consecutive_returns.length
+  verse_array.length
 end
 
-#method that identifies the number of lines in the poem
 def number_of_lines(poem)
-  number_of_returns = []
-  #put return into an array everytime a line ends
-  poem.each do |line|
-    if line ~= /$/
-      number_of_returns.push(:return)
-    end
+  line_array = []
+  poem.each_line do |line|
+    line_array << line.count
   end
-  number_of_returns.length
+  line_array.length
 end
 
-poems = {}
+#do this for poem objects?
 
 Dir.glob('data/*.rb').each do |poem|
   poems["#{author(poem)}"] = "#{title(poem)}"

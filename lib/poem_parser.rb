@@ -55,6 +55,7 @@ class Poem
   end
 end
 
+#non-class methods
 
 poem = File.read('data/poem_01.txt')
 
